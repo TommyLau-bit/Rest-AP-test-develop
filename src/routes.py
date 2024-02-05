@@ -27,7 +27,7 @@ def get_users():
 
 @app.route("/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id) 
     if user:
         return jsonify(user_schema.dump(user))
     else:
@@ -43,7 +43,7 @@ def add_user():
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
     if user:
         db.session.delete(user)
         db.session.commit()
@@ -53,7 +53,7 @@ def delete_user(user_id):
 
 @app.route("/users/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
     if user:
         user_json = request.get_json()
         user_update = user_schema.load(user_json, instance=user, partial=True)
@@ -74,7 +74,7 @@ def get_cases():
 @app.route("/cases/<int:case_id>", methods=["GET"])
 def get_case(case_id):
     """Returns the case with the given ID in JSON."""
-    case = Case.query.get(case_id)
+    case = db.session.get(Case, case_id)
     if case:
         return jsonify(case_schema.dump(case))
     else:
@@ -99,7 +99,7 @@ def add_case():
 @app.route('/cases/<int:case_id>', methods=['DELETE'])
 def delete_case(case_id):
     """Deletes a case."""
-    case = Case.query.get(case_id)
+    case = db.session.get(Case, case_id)
     if case:
         db.session.delete(case)
         db.session.commit()
@@ -110,7 +110,7 @@ def delete_case(case_id):
 @app.route("/cases/<int:case_id>", methods=["PUT"])
 def update_case(case_id):
     """Updates a case."""
-    case = Case.query.get(case_id)
+    case = db.session.get(Case, case_id)
     if case:
         case_json = request.get_json()
         case_update = case_schema.load(case_json, instance=case, partial=True)
@@ -131,7 +131,7 @@ def get_complaints():
 @app.route("/complaints/<int:complaint_id>", methods=["GET"])
 def get_complaint(complaint_id):
     """Returns the complaint with the given ID in JSON."""
-    complaint = Complaint.query.get(complaint_id)
+    complaint = db.session.get(Complaint, complaint_id)
     if complaint:
         return jsonify(complaint_schema.dump(complaint))
     else:
@@ -157,7 +157,7 @@ def add_complaint():
 @app.route('/complaints/<int:complaint_id>', methods=['DELETE'])
 def delete_complaint(complaint_id):
     """Deletes a complaint."""
-    complaint = Complaint.query.get(complaint_id)
+    complaint = db.session.get(Complaint, complaint_id)
     if complaint:
         db.session.delete(complaint)
         db.session.commit()
@@ -168,7 +168,7 @@ def delete_complaint(complaint_id):
 @app.route("/complaints/<int:complaint_id>", methods=["PUT"])
 def update_complaint(complaint_id):
     """Updates a complaint."""
-    complaint = Complaint.query.get(complaint_id)
+    complaint = db.session.get(Complaint, complaint_id)
     if complaint:
         complaint_json = request.get_json()
         complaint_update = complaint_schema.load(complaint_json, instance=complaint, partial=True)
@@ -189,7 +189,7 @@ def get_dashboards():
 @app.route("/dashboards/<int:dashboard_id>", methods=["GET"])
 def get_dashboard(dashboard_id):
     """Returns the dashboard with the given ID in JSON."""
-    dashboard = Dashboard.query.get(dashboard_id)
+    dashboard = db.session.get(Dashboard, dashboard_id)
     if dashboard:
         return jsonify(dashboard_schema.dump(dashboard))
     else:
@@ -213,7 +213,7 @@ def add_dashboard():
 @app.route('/dashboards/<int:dashboard_id>', methods=['DELETE'])
 def delete_dashboard(dashboard_id):
     """Deletes a dashboard."""
-    dashboard = Dashboard.query.get(dashboard_id)
+    dashboard = db.session.get(Dashboard, dashboard_id)
     if dashboard:
         db.session.delete(dashboard)
         db.session.commit()
@@ -224,7 +224,7 @@ def delete_dashboard(dashboard_id):
 @app.route("/dashboards/<int:dashboard_id>", methods=["PUT"])
 def update_dashboard(dashboard_id):
     """Updates a dashboard."""
-    dashboard = Dashboard.query.get(dashboard_id)
+    dashboard = db.session.get(Dashboard, dashboard_id)
     if dashboard:
         dashboard_json = request.get_json()
         
@@ -250,7 +250,7 @@ def get_filters():
 @app.route("/filters/<int:filter_id>", methods=["GET"])
 def get_filter(filter_id):
     """Returns the filter with the given ID in JSON."""
-    filter_ = Filter.query.get(filter_id)
+    filter_ = db.session.get(Filter, filter_id)
     if filter_:
         return jsonify(filter_schema.dump(filter_))
     else:
@@ -269,7 +269,7 @@ def add_filter():
 @app.route('/filters/<int:filter_id>', methods=['DELETE'])
 def delete_filter(filter_id):
     """Deletes a filter."""
-    filter_ = Filter.query.get(filter_id)
+    filter_ = db.session.get(Filter, filter_id)
     if filter_:
         db.session.delete(filter_)
         db.session.commit()
@@ -280,7 +280,7 @@ def delete_filter(filter_id):
 @app.route("/filters/<int:filter_id>", methods=["PUT"])
 def update_filter(filter_id):
     """Updates a filter."""
-    filter_ = Filter.query.get(filter_id)
+    filter_ = db.session.get(Filter, filter_id)
     if filter_:
         filter_json = request.get_json()
         filter_update = filter_schema.load(filter_json, instance=filter_, partial=True)
