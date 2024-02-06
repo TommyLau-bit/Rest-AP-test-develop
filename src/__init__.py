@@ -81,6 +81,7 @@ def add_data_from_csv():
                     request_received_month=row[3],
                     request_closed_year=row[4],
                     request_closed_month=row[5],
+                    # Add the case to the session
                 )
                 db.session.add(case)
             db.session.commit()  # Commit after adding all cases
@@ -89,7 +90,6 @@ def add_data_from_csv():
         first_complaint = db.session.query(Complaint).first()
         if not first_complaint:
             for row in csv_reader:
-                # Assuming complaint data follows case data in the CSV
                 complaint = Complaint(reason_grouped=row[9])
                 db.session.add(complaint)
             db.session.commit()  # Commit after adding all complaints
@@ -98,7 +98,6 @@ def add_data_from_csv():
         first_dashboard = db.session.query(Dashboard).first()
         if not first_dashboard:
             for row in csv_reader:
-                # Assuming dashboard data follows complaint data in the CSV
                 dashboard = Dashboard(
                     active_days=row[6],
                     closed_on_time=row[8],
