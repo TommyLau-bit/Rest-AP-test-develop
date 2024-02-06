@@ -32,6 +32,12 @@ To set up and install this application, follow these steps:
 
 4. Install dependencies:
     pip install -r requirements.txt
+    pip install Flask
+    pip install flask_marshmallow
+    pip install Flask-Migrate
+    pip install marshmallow-sqlalchemy
+    pip install pytest
+    pip install -e .
 
 4. Run Flask application:
     python app.py or flask --app src run --debug
@@ -39,5 +45,6 @@ To set up and install this application, follow these steps:
 5. Stop application:
     ctrl + c
 
-
+6. To run tests:
+    pytest
 
