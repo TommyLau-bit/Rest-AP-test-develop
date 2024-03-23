@@ -7,26 +7,20 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-        <tr>
-            <th>Complaint ID</th>
-            <th>Reason</th>
-            <th>Status</th>
-            <th>Date Submitted</th>
-            <th>Submitted By</th>
-            <th>Resolution</th>
-        </tr>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Reason</th>
+                <th>User ID</th>
+            </tr>
         </thead>
         <tbody>
-        {% for complaint in complaints %}
-        <tr>
-            <td>{{ complaint.id }}</td>
-            <td>{{ complaint.reason }}</td>
-            <td>{{ complaint.status }}</td>
-            <td>{{ complaint.date_submitted }}</td>
-            <td>{{ complaint.user_id }}</td>  <!-- Assuming user_id stores the identifier -->
-            <td>{{ complaint.resolution }}</td>
-        </tr>
-        {% endfor %}
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.id }}</td>
+                <td>{{ complaint.reason_grouped }}</td>
+                <td>{{ complaint.user_id }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

@@ -3,20 +3,40 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="mt-4">
+<div class="container mt-4">
     <h2>Dashboard Overview</h2>
-    <h1>Welcome, {{ user_name }}!</h1>
+    {% if dashboard_data %}
     <div class="row">
-        {% for metric in metrics %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
+        <div class="col-sm-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Active Days</div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ metric.name }}</h5>
-                    <p class="card-text">Value: {{ metric.value }}</p>
+                    <h5 class="card-title">{{ dashboard_data.active_days }}</h5>
+                    <p class="card-text">Number of active days this period.</p>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <div class="col-sm-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Closed On Time</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ dashboard_data.closed_on_time }}</h5>
+                    <p class="card-text">Cases closed on time.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Case Activity Grouped</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ dashboard_data.case_active_grouped }}</h5>
+                    <p class="card-text">Grouped case activities.</p>
+                </div>
+            </div>
+        </div>
     </div>
+    {% else %}
+    <p>No dashboard data available.</p>
+    {% endif %}
 </div>
 {% endblock %}

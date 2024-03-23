@@ -5,6 +5,7 @@ from .schemas import UserSchema, CaseSchema, ComplaintSchema, DashboardSchema, F
 from . import db  # Import the SQLAlchemy instance
 from flask import Flask, render_template
 from flask_login import login_required, current_user 
+from .figures import dashboard_chart, complaint_chart, dashboard_active_cases_chart, get_complaint_reasons_distribution, case_closure_time_distribution
 
 
 # Initialize Marshmallow Schemas
@@ -18,6 +19,35 @@ dashboard_schema = DashboardSchema()
 dashboards_schema = DashboardSchema(many=True)
 filter_schema = FilterSchema()
 filters_schema = FilterSchema(many=True)
+
+@app.route('/', methods=['GET'])
+def index():
+    """Returns the home page with featured cases, complaints, and dashboard metrics."""
+    recent_cases = Case.query.order_by(Case.request_received_year.desc(), Case.request_received_month.desc()).limit(5).all()
+    recent_complaints = Complaint.query.order_by(Complaint.id.desc()).limit(5).all()
+    latest_dashboard = Dashboard.query.order_by(Dashboard.id.desc()).first()
+    
+    return render_template('index.html', 
+                           recent_cases=recent_cases, 
+                           recent_complaints=recent_complaints,
+                           latest_dashboard=latest_dashboard)
+
+@app.route('/charts')
+def display_charts():
+    # Generate all charts
+    dashboard_chart_html = dashboard_chart()
+    complaint_chart_html = complaint_chart()
+    dashboard_active_cases_chart_html = dashboard_active_cases_chart()
+    complaint_reasons_distribution_html = get_complaint_reasons_distribution()
+    case_closure_time_distribution_html = case_closure_time_distribution()
+
+    # Pass all chart HTML strings to the template
+    return render_template('charts.html', 
+                           dashboard_chart_html=dashboard_chart_html,
+                           complaint_chart_html=complaint_chart_html,
+                           dashboard_active_cases_chart_html=dashboard_active_cases_chart_html,
+                           complaint_reasons_distribution_html=complaint_reasons_distribution_html,
+                           case_closure_time_distribution_html=case_closure_time_distribution_html)
 
 # User Routes
 @app.route("/users", methods=["GET"])
@@ -127,6 +157,26 @@ def update_case(case_id):
         return jsonify(case_schema.dump(case_update))
     else:
         return jsonify({"message": "Case not found"}), 404
+    
+@app.route('/cases')
+def list_cases():
+    cases = Case.query.all()  # Fetch all cases
+    return render_template('list_cases.html', cases=cases)
+
+@app.route('/case/<int:case_id>')
+def case_detail(case_id):
+    case = Case.query.get_or_404(case_id)  # Fetch a single case by ID
+    return render_template('case_detail.html', case=case)
+
+@app.route('/case-closure-times')
+def display_case_closure_times():
+    """Displays a histogram of case closure times."""
+    # Call your visualization function to get the chart HTML
+    chart_html = case_closure_time_distribution()
+    
+    # Render a template, passing the chart HTML to be displayed
+    return render_template('chart.html', fig_html=chart_html)
+
 
 
 # Complaint routes
@@ -192,6 +242,16 @@ def list_complaints():
     complaints = Complaint.query.all()  # Assuming Complaint.query.all() fetches all complaints
     return render_template('list_complaints.html', complaints=complaints)
 
+@app.route('/complaint_chart')
+def display_complaint_chart():
+    chart_data = complaint_chart()
+    return render_template('chart.html', fig_html=chart_data)
+
+@app.route('/complaint-reasons')
+def complaint_reasons():
+    chart_html = get_complaint_reasons_distribution()
+    return render_template("chart.html", fig_html=chart_html)
+
 
 # Dashboard routes 
 @app.route("/dashboards", methods=["GET"])
@@ -255,11 +315,20 @@ def update_dashboard(dashboard_id):
         return jsonify({"message": "Dashboard not found"}), 404
 
 @app.route('/dashboard')
+@login_required  # Ensure only authenticated users can access this route
 def show_dashboard():
-    # Example: Fetching dashboard data (these values are just placeholders)
-    dashboard_data = {'total_cases': 120, 'open_complaints': 5}
+    dashboard_data = Dashboard.query.filter_by(user_id=current_user.id).first()  # Get the first dashboard entry for the user
     return render_template('dashboard.html', dashboard_data=dashboard_data)
 
+@app.route('/chart')
+def display_chart():
+    chart_data = dashboard_chart(db)
+    return render_template('chart.html', fig_html=chart_data)
+
+@app.route('/dashboard_active_cases_chart')
+def display_dashboard_active_cases_chart():
+    chart_data = dashboard_active_cases_chart()
+    return render_template('chart.html', fig_html=chart_data)
     
 # filter routes 
 @app.route("/filters", methods=["GET"])
