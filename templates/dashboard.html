@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h2>Dashboard Overview</h2>
+    <h1>Welcome, {{ user_name }}!</h1>
+    <div class="row">
+        {% for metric in metrics %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ metric.name }}</h5>
+                    <p class="card-text">Value: {{ metric.value }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
