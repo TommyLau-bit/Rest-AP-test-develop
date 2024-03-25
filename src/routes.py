@@ -3,10 +3,10 @@ from flask import current_app as app, jsonify, request
 from .models import User, Case, Complaint, Dashboard, Filter
 from .schemas import UserSchema, CaseSchema, ComplaintSchema, DashboardSchema, FilterSchema
 from . import db  # Import the SQLAlchemy instance
-from flask import Flask, render_template
+from flask import Flask, render_template,  flash, redirect, url_for, request
 from flask_login import login_required, current_user 
 from .figures import dashboard_chart, complaint_chart, dashboard_active_cases_chart, get_complaint_reasons_distribution, case_closure_time_distribution
-
+from .forms import CaseForm, ComplaintForm, DashboardForm, FilterForm
 
 # Initialize Marshmallow Schemas
 user_schema = UserSchema()
@@ -48,6 +48,45 @@ def display_charts():
                            dashboard_active_cases_chart_html=dashboard_active_cases_chart_html,
                            complaint_reasons_distribution_html=complaint_reasons_distribution_html,
                            case_closure_time_distribution_html=case_closure_time_distribution_html)
+
+@app.route("/add_form", methods=["GET", "POST"])
+def add_form():
+    # Create instances of the forms
+    case_form = CaseForm()
+    complaint_form = ComplaintForm()
+    dashboard_form = DashboardForm()
+    filter_form = FilterForm()
+
+    if request.method == "POST":
+        # Check which form was submitted
+        if case_form.validate_on_submit():
+            # Logic for handling CaseForm submission
+            # You can access form data using case_form.data
+            flash("Case form submitted successfully!", "success")
+            return redirect(url_for("index"))
+        elif complaint_form.validate_on_submit():
+            # Logic for handling ComplaintForm submission
+            # You can access form data using complaint_form.data
+            flash("Complaint form submitted successfully!", "success")
+            return redirect(url_for("index"))
+        elif dashboard_form.validate_on_submit():
+            # Logic for handling DashboardForm submission
+            # You can access form data using dashboard_form.data
+            flash("Dashboard form submitted successfully!", "success")
+            return redirect(url_for("index"))
+        elif filter_form.validate_on_submit():
+            # Logic for handling FilterForm submission
+            # You can access form data using filter_form.data
+            flash("Filter form submitted successfully!", "success")
+            return redirect(url_for("index"))
+        else:
+            # If none of the forms pass validation, re-render the template with the forms and display error messages
+            flash("Form submission failed. Please check the input.", "error")
+            return render_template("add_form.html", case_form=case_form, complaint_form=complaint_form, dashboard_form=dashboard_form, filter_form=filter_form)
+
+    # If it's a GET request, render the template with empty forms
+    return render_template("add_form.html", case_form=case_form, complaint_form=complaint_form, dashboard_form=dashboard_form, filter_form=filter_form)
+
 
 # User Routes
 @app.route("/users", methods=["GET"])
