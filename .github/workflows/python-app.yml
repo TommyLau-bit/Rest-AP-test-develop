@@ -27,13 +27,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e .  # Install your code
-        pip install selenium pytest  # Install Selenium and pytest
+        pip install selenium pytest  # Install Selenium 
+        pip install pytest #Install pytest
         # Add any other test libraries you are using
     - name: Lint with pylint
       run: |
         # Stop the build if there are Python syntax errors or undefined names
         pylint . --exit-zero
         # Add any other linting options you prefer for pylint
-    - name: Test with pytest
-      run: |
-        pytest
+    - name: Run tests
+      run: python -m pytest --browser headless-chrome
+ 
