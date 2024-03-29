@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Complaints{% endblock %}
+
+{% block content %}
+<h2 id="all-complaints-heading">All Complaints</h2>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Reason</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td id="complaint-id">{{ complaint.id }}</td>
+                <td>{{ complaint.reason_grouped }}</td>
+                <td>{{ complaint.user_id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

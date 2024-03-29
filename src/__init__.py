@@ -5,7 +5,6 @@ from sqlalchemy.orm import DeclarativeBase
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 
-
 class Base(DeclarativeBase):
     pass
 

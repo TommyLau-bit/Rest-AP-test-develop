@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 id="dashboard-overview-heading">Dashboard Overview</h2>
+    {% if dashboard_data %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Active Days</div>
+                <div class="card-body">
+                    <h5 class="card-title" id="active-days">{{ dashboard_data.active_days }}</h5>
+                    <p class="card-text">Number of active days this period.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Closed On Time</div>
+                <div class="card-body">
+                    <h5 class="card-title" id="closed-on-time">{{ dashboard_data.closed_on_time }}</h5>
+                    <p class="card-text">Cases closed on time.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Case Activity Grouped</div>
+                <div class="card-body">
+                    <h5 class="card-title" id="case-active-grouped">{{ dashboard_data.case_active_grouped }}</h5>
+                    <p class="card-text">Grouped case activities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No dashboard data available.</p>
+    {% endif %}
+</div>
+{% endblock %}

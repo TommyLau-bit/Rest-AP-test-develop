@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}MyApp - Home{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 id="recent-cases-heading">Recent Cases</h2>
+    <ul class="list-group mb-4">
+        {% for case in recent_cases %}
+        <li class="list-group-item">
+            Case Type: {{ case.case_type }}, Status: {{ case.status }},
+            Received: {{ case.request_received_month }}/{{ case.request_received_year }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="recent-complaints-heading">Recent Complaints</h2>
+    <ul class="list-group mb-4">
+        {% for complaint in recent_complaints %}
+        <li class="list-group-item">
+            Complaint Reason: {{ complaint.reason_grouped }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="dashboard-metrics-heading">Dashboard Metrics</h2>
+    <div>
+        <p>Active Days: {{ latest_dashboard.active_days }}</p>
+        <p>Closed On Time: {{ latest_dashboard.closed_on_time }}</p>
+        <p>Case Activity Grouped: {{ latest_dashboard.case_active_grouped }}</p>
+    </div>
+</div>
+{% endblock %}

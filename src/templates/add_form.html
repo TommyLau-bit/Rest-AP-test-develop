@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add New form
+{% endblock %}
+
+{% block content %}
+    <h4>Enter the details for the new form</h4>
+    <form method="post" novalidate>
+        <div class="col-md-6">
+            <!-- Render fields for Case Form -->
+            {{ render_field(form.case_type) }}
+            {{ render_field(form.status) }}
+            {{ render_field(form.request_received_year) }}
+            {{ render_field(form.request_received_month) }}
+            {{ render_field(form.request_closed_year) }}
+            {{ render_field(form.request_closed_month) }}
+
+            <!-- Render fields for Complaint Form -->
+            {{ render_field(form.reason_grouped) }}
+
+            <!-- Render fields for Dashboard Form -->
+            {{ render_field(form.active_days) }}
+            {{ render_field(form.closed_on_time) }}
+            {{ render_field(form.case_active_grouped) }}
+
+            <!-- Render fields for Filter Form -->
+            {{ render_field(form.criteria) }}
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+{% endblock %}

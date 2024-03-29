@@ -7,6 +7,8 @@ from flask import Flask, render_template,  flash, redirect, url_for, request
 from flask_login import login_required, current_user 
 from .figures import dashboard_chart, complaint_chart, dashboard_active_cases_chart, get_complaint_reasons_distribution, case_closure_time_distribution
 from .forms import CaseForm, ComplaintForm, DashboardForm, FilterForm
+from flask_login import logout_user
+
 
 # Initialize Marshmallow Schemas
 user_schema = UserSchema()
@@ -88,6 +90,21 @@ def add_form():
     return render_template("add_form.html", case_form=case_form, complaint_form=complaint_form, dashboard_form=dashboard_form, filter_form=filter_form)
 
 
+@app.route('/settings')
+def settings():
+    # Logic to render the settings page
+    return render_template('settings.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    """Logout route."""
+    logout_user()  # This will log out the current user
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('index'))  # Redirect to the homepage or login page after logout
+
+
+
 # User Routes
 @app.route("/users", methods=["GET"])
 def get_users():
@@ -136,8 +153,9 @@ def update_user(user_id):
     
 @app.route('/user/<int:user_id>')
 def user_profile(user_id):
-    user = User.query.get_or_404(user_id)
+    user = db.session.query(User).get_or_404(user_id)
     return render_template('user_profile.html', user=user)
+
 
 
 # Case routes   
@@ -199,12 +217,12 @@ def update_case(case_id):
     
 @app.route('/cases')
 def list_cases():
-    cases = Case.query.all()  # Fetch all cases
+    cases = db.session.query(Case).all()   # Fetch all cases
     return render_template('list_cases.html', cases=cases)
 
 @app.route('/case/<int:case_id>')
 def case_detail(case_id):
-    case = Case.query.get_or_404(case_id)  # Fetch a single case by ID
+    case = db.session.query(Case).get_or_404(case_id)  # Fetch a single case by ID
     return render_template('case_detail.html', case=case)
 
 @app.route('/case-closure-times')
