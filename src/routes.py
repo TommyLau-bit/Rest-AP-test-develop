@@ -9,7 +9,6 @@ from .figures import dashboard_chart, complaint_chart, dashboard_active_cases_ch
 from .forms import CaseForm, ComplaintForm, DashboardForm, FilterForm
 from flask_login import logout_user
 
-
 # Initialize Marshmallow Schemas
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -89,7 +88,6 @@ def add_form():
     # If it's a GET request, render the template with empty forms
     return render_template("add_form.html", case_form=case_form, complaint_form=complaint_form, dashboard_form=dashboard_form, filter_form=filter_form)
 
-
 @app.route('/settings')
 def settings():
     # Logic to render the settings page
@@ -162,7 +160,6 @@ def update_user(user_id):
 def user_profile(user_id):
     user = db.session.query(User).get_or_404(user_id)
     return render_template('user_profile.html', user=user)
-
 
 
 # Case routes   
@@ -242,7 +239,6 @@ def display_case_closure_times():
     return render_template('chart.html', fig_html=chart_html)
 
 
-
 # Complaint routes
 @app.route("/complaints", methods=["GET"])
 def get_complaints():
@@ -316,7 +312,6 @@ def complaint_reasons():
     chart_html = get_complaint_reasons_distribution()
     return render_template("chart.html", fig_html=chart_html)
 
-
 # Dashboard routes 
 @app.route("/dashboards", methods=["GET"])
 def get_dashboards():
@@ -347,7 +342,6 @@ def add_dashboard():
     db.session.add(dashboard)
     db.session.commit()
     return jsonify({"message": f"Dashboard added with id= {dashboard.id}"}), 201
-
 
 @app.route('/dashboards/<int:dashboard_id>', methods=['DELETE'])
 def delete_dashboard(dashboard_id):
@@ -420,7 +414,6 @@ def add_filter():
     db.session.commit()
     return jsonify({"message": f"Filter added with id= {filter_.id}"}), 201
 
-
 @app.route('/filters/<int:filter_id>', methods=['DELETE'])
 def delete_filter(filter_id):
     """Deletes a filter."""
@@ -445,14 +438,11 @@ def update_filter(filter_id):
     else:
         return jsonify({"message": "Filter not found"}), 404
 
-from flask import render_template
-    
-
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({"message": "Not Found"}), 404
 
-
 @app.route('/')
 def hello():
     return f"Hello!"
+
