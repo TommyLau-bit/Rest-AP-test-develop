@@ -6,7 +6,6 @@ from sqlalchemy import func
 
 def dashboard_chart():
     # Create a DataFrame from the provided data snippet
-    # In a live system, you'd use something like pd.read_sql_query(sql, con) to load data from your database
     df = pd.read_csv('/Users/tommy/github-classroom/comp0034-cw2i-TommyLau-bit/src/data/dataset_prepared.csv')  # Update the path to your CSV file
 
     # Aggregate the 'Closed on Time?' data

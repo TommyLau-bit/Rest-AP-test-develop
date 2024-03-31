@@ -29,7 +29,6 @@ def test_home_page(client):
 
 
 def test_case_detail(client):
-    # Assuming there's a case with ID=2 in your database
     response = client.get('/case/2')
     assert response.status_code == 200
     assert b"Case Details" in response.data
@@ -45,7 +44,7 @@ def test_search_functionality(chrome_driver, live_server):
     """Test the search functionality on the home page."""
     chrome_driver.get(live_server)
     search_input = chrome_driver.find_element(By.ID, "search-input")
-    search_input.send_keys("FOIA Case")  # Searching for a specific case type
+    search_input.send_keys("FOIA Case")  
     search_input.send_keys(Keys.ENTER)
     
     # Wait for the search results to load
@@ -53,7 +52,6 @@ def test_search_functionality(chrome_driver, live_server):
         EC.visibility_of_element_located((By.ID, "search-results"))
     )
     
-    # Assuming the search results are displayed in a specific section of the page
     search_results_section = chrome_driver.find_element(By.ID, "search-results")
     assert "FOIA Case" in search_results_section.text
 
