@@ -103,7 +103,14 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))  # Redirect to the homepage or login page after logout
 
-
+@app.route('/search')
+def search_results():
+    query = request.args.get('query')
+    if query:
+        # Assuming Case is the model and case_type is a searchable field
+        cases = Case.query.filter(Case.case_type.ilike(f"%{query}%")).all()
+        return render_template('search_results.html', cases=cases, query=query)
+    return redirect(url_for('index'))
 
 # User Routes
 @app.route("/users", methods=["GET"])

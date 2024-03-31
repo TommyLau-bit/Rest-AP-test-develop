@@ -32,10 +32,3 @@ def live_server():
     time.sleep(2)  # Allow some time for the server to start
     yield f"http://127.0.0.1:5000"
     process.terminate()  # Terminate the server process after testing
-
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        with app.app_context():
-            yield client
-

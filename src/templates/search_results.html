@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Search Results for "{{ query }}"</h2>
+<ul id="search-results">
+    {% for case in cases %}
+    <li>{{ case.case_type }} - {{ case.status }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

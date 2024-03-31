@@ -4,12 +4,23 @@
 
 {% block content %}
 <div class="container mt-4">
+    <!-- Search form -->
+    <form action="{{ url_for('search_results') }}" method="get">
+        <input type="text" id="search-input" name="query" placeholder="Search cases...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div id="search-results">
+        <!-- Search results will be dynamically inserted here -->
+    </div>
+
     <h2 id="recent-cases-heading">Recent Cases</h2>
     <ul class="list-group mb-4">
         {% for case in recent_cases %}
         <li class="list-group-item">
             Case Type: {{ case.case_type }}, Status: {{ case.status }},
             Received: {{ case.request_received_month }}/{{ case.request_received_year }}
+            <!-- Insert the View Case link here for each case -->
+            <a href="{{ url_for('case_detail', case_id=case.id) }}" class="btn btn-info btn-sm view-case-link">View Case</a>
         </li>
         {% endfor %}
     </ul>
@@ -22,6 +33,9 @@
         </li>
         {% endfor %}
     </ul>
+
+    <!-- Add a link to navigate to the Complaints page -->
+    <a href="{{ url_for('list_complaints') }}" class="btn btn-primary">View All Complaints</a>
 
     <h2 id="dashboard-metrics-heading">Dashboard Metrics</h2>
     <div>
