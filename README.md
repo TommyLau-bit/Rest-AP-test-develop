@@ -49,7 +49,6 @@ To set up and install this application, follow these steps:
     pip install Flask-WTF
     pip install WTForms-SQLAlchemy
     pip install selenium pytest
-    # Install chromedriver too and make sure that it is within the project PATH
     pip install requests
     pip install Flask-Login
 
