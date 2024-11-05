@@ -1,7 +1,3 @@
-## MyApp
-
-### Introduction
-
 **App2** is a dynamic data visualization web application that leverages the REST API (App1) to provide users with an intuitive interface for analyzing and interpreting the Metropolitan Police Service's performance in handling Freedom of Information Requests and Appeals. Our web app offers interactive and informative dashboards, empowering users to gain valuable insights and make informed decisions based on the provided data.
 
 
