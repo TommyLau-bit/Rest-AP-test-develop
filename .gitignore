@@ -151,6 +151,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
@@ -244,3 +248,7 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1

@@ -3,11 +3,15 @@ from flask import current_app as app, jsonify, request
 from .models import User, Case, Complaint, Dashboard, Filter
 from .schemas import UserSchema, CaseSchema, ComplaintSchema, DashboardSchema, FilterSchema
 from . import db  # Import the SQLAlchemy instance
+<<<<<<< HEAD
 from flask import Flask, render_template,  flash, redirect, url_for, request
 from flask_login import login_required, current_user 
 from .figures import dashboard_chart, complaint_chart, dashboard_active_cases_chart, get_complaint_reasons_distribution, case_closure_time_distribution
 from .forms import CaseForm, ComplaintForm, DashboardForm, FilterForm
 from flask_login import logout_user
+=======
+
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 
 # Initialize Marshmallow Schemas
 user_schema = UserSchema()
@@ -21,6 +25,7 @@ dashboards_schema = DashboardSchema(many=True)
 filter_schema = FilterSchema()
 filters_schema = FilterSchema(many=True)
 
+<<<<<<< HEAD
 @app.route('/', methods=['GET'])
 def index():
     """Returns the home page with featured cases, complaints, and dashboard metrics."""
@@ -110,6 +115,8 @@ def search_results():
         return render_template('search_results.html', cases=cases, query=query)
     return redirect(url_for('index'))
 
+=======
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 # User Routes
 @app.route("/users", methods=["GET"])
 def get_users():
@@ -155,12 +162,15 @@ def update_user(user_id):
         return jsonify(user_schema.dump(user_update))
     else:
         return jsonify({"message": "User not found"}), 404
+<<<<<<< HEAD
     
 @app.route('/user/<int:user_id>')
 def user_profile(user_id):
     user = db.session.query(User).get_or_404(user_id)
     return render_template('user_profile.html', user=user)
 
+=======
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 
 # Case routes   
 @app.route("/cases", methods=["GET"])
@@ -218,6 +228,7 @@ def update_case(case_id):
         return jsonify(case_schema.dump(case_update))
     else:
         return jsonify({"message": "Case not found"}), 404
+<<<<<<< HEAD
     
 @app.route('/cases')
 def list_cases():
@@ -238,6 +249,8 @@ def display_case_closure_times():
     # Render a template, passing the chart HTML to be displayed
     return render_template('chart.html', fig_html=chart_html)
 
+=======
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 
 # Complaint routes
 @app.route("/complaints", methods=["GET"])
@@ -297,6 +310,7 @@ def update_complaint(complaint_id):
     else:
         return jsonify({"message": "Complaint not found"}), 404
 
+<<<<<<< HEAD
 @app.route('/complaints')
 def list_complaints():
     complaints = Complaint.query.all()  # Assuming Complaint.query.all() fetches all complaints
@@ -312,6 +326,8 @@ def complaint_reasons():
     chart_html = get_complaint_reasons_distribution()
     return render_template("chart.html", fig_html=chart_html)
 
+=======
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 # Dashboard routes 
 @app.route("/dashboards", methods=["GET"])
 def get_dashboards():
@@ -343,6 +359,10 @@ def add_dashboard():
     db.session.commit()
     return jsonify({"message": f"Dashboard added with id= {dashboard.id}"}), 201
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 @app.route('/dashboards/<int:dashboard_id>', methods=['DELETE'])
 def delete_dashboard(dashboard_id):
     """Deletes a dashboard."""
@@ -371,6 +391,7 @@ def update_dashboard(dashboard_id):
         return jsonify(dashboard_schema.dump(dashboard_update))
     else:
         return jsonify({"message": "Dashboard not found"}), 404
+<<<<<<< HEAD
 
 @app.route('/dashboard')
 @login_required  # Ensure only authenticated users can access this route
@@ -387,6 +408,8 @@ def display_chart():
 def display_dashboard_active_cases_chart():
     chart_data = dashboard_active_cases_chart()
     return render_template('chart.html', fig_html=chart_data)
+=======
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
     
 # filter routes 
 @app.route("/filters", methods=["GET"])
@@ -414,6 +437,10 @@ def add_filter():
     db.session.commit()
     return jsonify({"message": f"Filter added with id= {filter_.id}"}), 201
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 @app.route('/filters/<int:filter_id>', methods=['DELETE'])
 def delete_filter(filter_id):
     """Deletes a filter."""
@@ -437,12 +464,23 @@ def update_filter(filter_id):
         return jsonify(filter_schema.dump(filter_update))
     else:
         return jsonify({"message": "Filter not found"}), 404
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({"message": "Not Found"}), 404
 
+<<<<<<< HEAD
 @app.route('/')
 def hello():
     return f"Hello!"
 
+=======
+ 
+@app.route('/')
+def hello():
+    return f"Hello!"
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1

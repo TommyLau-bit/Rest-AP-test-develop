@@ -20,6 +20,10 @@ class Case(db.Model):
     request_received_month = db.Column(db.String)
     request_closed_year = db.Column(db.String)
     request_closed_month = db.Column(db.String)
+<<<<<<< HEAD
+=======
+    # ... other fields as per your dataset
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
     user_id = db.Column(db.ForeignKey('user.id'))
 
 class Complaint(db.Model):

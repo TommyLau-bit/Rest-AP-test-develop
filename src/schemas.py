@@ -14,7 +14,11 @@ class CaseSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
 
+<<<<<<< HEAD
     # Add fields for the new columns added
+=======
+    # Add fields for the new columns you've added
+>>>>>>> 80d383b5124e4d5eab5e0f8fa6c3685fca041ae1
     status = ma.auto_field()
     request_received_year = ma.auto_field()
     request_received_month = ma.auto_field()
