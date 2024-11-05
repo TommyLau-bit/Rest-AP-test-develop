@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# COMP0034 Coursework 2 2023/24
-COMP0034 Coursework 2 starter repository
-
 ## MyApp
 
 ### Introduction
@@ -24,9 +20,6 @@ To work with this application, you'll need the following:
 
 ### Installation
 =======
-# COMP0034 Coursework 1 2023/24
-COMP0034 Coursework 1 starter repository
-# Metropolitan Police Freedom of Information Data API
 
 ## Introduction
 This Flask application serves as a REST API for storing and retrieving information related to the Metropolitan Police Freedom of Information data. It allows users to access and manage data related to police cases and freedom of information requests.
